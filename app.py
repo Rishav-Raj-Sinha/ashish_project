@@ -1,13 +1,11 @@
 """Streamlit front end for the explainable phishing detection and advisory system.
 
 Pipeline per email: trained TF-IDF classifier + deterministic rules -> risk score ->
-severity (Safe / Suspicious / Phishing) -> advisory actions. Gemini is optional and only
-rewrites the verified evidence in plain words; it never decides the result.
+severity (Safe / Suspicious / Phishing) -> advisory actions. Everything runs locally.
 """
 
 import hashlib
 import json
-import os
 from pathlib import Path
 
 import pandas as pd
@@ -43,27 +41,9 @@ def samples_signature() -> tuple:
     return tuple((str(p), p.stat().st_mtime) for p in sorted(SAMPLES_DIR.rglob("*.eml")))
 
 
-def get_api_key() -> str | None:
-    key = st.session_state.get("api_key_input") or os.environ.get("GEMINI_API_KEY") \
-        or os.environ.get("GOOGLE_API_KEY")
-    if not key:
-        try:
-            key = st.secrets.get("GEMINI_API_KEY")
-        except Exception:
-            key = None
-    return key
-
-
-def analyze_item(item: dict, engine: Engine, api_key: str | None = None) -> None:
-    """Run the local pipeline; add a Gemini explanation when a key is available."""
-    ev = engine.analyze(item)
-    res = {"ev": ev, "gemini": None, "gemini_error": None}
-    if api_key:
-        try:
-            res["gemini"] = detector.explain_with_gemini(ev, api_key) or None
-        except Exception as exc:
-            res["gemini_error"] = str(exc)[:200]
-    st.session_state.results[item["key"]] = res
+def analyze_item(item: dict, engine: Engine) -> None:
+    """Run the local pipeline (trained model + rules + advisory) and store the result."""
+    st.session_state.results[item["key"]] = {"ev": engine.analyze(item)}
 
 
 def severity_text(item: dict) -> str:
@@ -83,13 +63,6 @@ if not MODEL_PATH.exists():
     st.stop()
 engine = get_engine()
 
-with st.sidebar:
-    st.header("Settings")
-    st.text_input("Gemini API key (optional)", type="password", key="api_key_input",
-                  help="Adds a plain-language explanation. The detection itself works without it.")
-    st.caption("Without a key, the app still classifies every email and shows the evidence and advice.")
-
-api_key = get_api_key()
 emails = get_samples(samples_signature())
 
 st.title("Explainable phishing detector")
@@ -170,7 +143,7 @@ with tab_analyze:
                             st.code(f"{shown}{l['url']}", language=None)
                 if st.button("Analyze", key=f"analyze_{selected['key']}", type="primary"):
                     with st.spinner("Analyzing..."):
-                        analyze_item(selected, engine, api_key)
+                        analyze_item(selected, engine)
 
             res = st.session_state.results.get(selected["key"])
             if res:
@@ -193,15 +166,7 @@ with tab_analyze:
                         st.markdown(f"- {tip}")
 
                     st.markdown("**Explanation**")
-                    if res["gemini"]:
-                        st.write(res["gemini"])
-                        st.caption("Written by Gemini from the evidence below. It does not change the result.")
-                    else:
-                        st.write(fallback_summary(ev))
-                        if res["gemini_error"]:
-                            st.caption(f"Gemini explanation unavailable ({res['gemini_error']}). Showing the built-in summary.")
-                        elif not api_key:
-                            st.caption("Built-in summary. Add a Gemini API key in the sidebar for a plain-language explanation.")
+                    st.write(fallback_summary(ev))
 
                     with st.expander("Evidence behind this result", expanded=True):
                         st.markdown("**Rule hits**")
@@ -304,5 +269,4 @@ with tab_eval:
                 "- **The dataset has no sender headers**, so the sender and authentication rules cannot be validated on it. "
                 "They are included by design and the weight on rules is kept between 0.1 and 0.5.\n"
                 "- **No URL-only baseline**: few messages in this dataset contain links.\n"
-                "- **Explanation quality is not measured**: fidelity, stability and a user study are future work.\n"
-                "- **Gemini text is not evaluated.** It only rewrites the evidence and does not affect the result.")
+                "- **Explanation quality is not measured**: fidelity, stability and a user study are future work.")
