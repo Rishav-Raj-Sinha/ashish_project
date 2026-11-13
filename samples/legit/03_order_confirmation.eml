@@ -1,0 +1,36 @@
+From: "Amazon.in" <auto-confirm@amazon.in>
+To: rishav@example.com
+Subject: Your order #402-1234567-8901234 has been placed
+Date: Tue, 10 Nov 2026 18:20:00 +0530
+Message-ID: <order-402@amazon.in>
+Authentication-Results: mx.example.com; spf=pass; dkim=pass; dmarc=pass
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="b-order"
+
+--b-order
+Content-Type: text/plain; charset="utf-8"
+
+Hello Rishav,
+
+Thank you for your order. We will send another email when your item ships.
+
+Order total: Rs 1,299.00
+Estimated delivery: 14 November 2026
+
+View or manage your order: https://www.amazon.in/gp/css/order-details
+
+We hope to see you again soon.
+Amazon.in
+
+--b-order
+Content-Type: text/html; charset="utf-8"
+
+<html><body>
+<p>Hello Rishav,</p>
+<p>Thank you for your order. We will send another email when your item ships.</p>
+<p>Order total: Rs 1,299.00<br>Estimated delivery: 14 November 2026</p>
+<p><a href="https://www.amazon.in/gp/css/order-details">View or manage your order</a></p>
+<p>We hope to see you again soon.<br>Amazon.in</p>
+</body></html>
+
+--b-order--

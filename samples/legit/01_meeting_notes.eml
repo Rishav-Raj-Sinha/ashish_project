@@ -1,0 +1,21 @@
+From: Priya Sharma <priya.sharma@acmetech.in>
+To: Rishav <rishav@acmetech.in>
+Subject: Meeting notes from Tuesday
+Date: Wed, 11 Nov 2026 09:15:00 +0530
+Message-ID: <notes-0911@acmetech.in>
+Authentication-Results: mx.acmetech.in; spf=pass; dkim=pass; dmarc=pass
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+
+Hi Rishav,
+
+Thanks for joining the sync on Tuesday. Quick summary of what we agreed:
+
+1. The dashboard prototype is due next Friday.
+2. Ankit will share the updated dataset by Monday.
+3. We will review the first draft together on Thursday at 4 pm.
+
+Let me know if I missed anything.
+
+Regards,
+Priya

@@ -1,0 +1,5 @@
+streamlit==1.67.0
+scikit-learn==1.9.1
+pandas==3.0.5
+joblib==1.6.0
+google-genai==3.2.0

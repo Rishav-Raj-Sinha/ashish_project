@@ -1,0 +1,262 @@
+{
+  "trained_at": "2026-11-12 21:41 UTC",
+  "sklearn_version": "1.9.1",
+  "dataset": {
+    "files": [
+      "enron_spam_data.csv"
+    ],
+    "rows_raw": 33716,
+    "rows_after_dedupe": 30000,
+    "unsafe_share": 0.483,
+    "train": 21000,
+    "validation": 4500,
+    "test": 4500
+  },
+  "alpha": 0.9,
+  "t_low": 0.3978,
+  "t_high": 0.484,
+  "policy_target": 0.99,
+  "severity_on_test": {
+    "safe": {
+      "n": 2305,
+      "share_unsafe": 0.00737527114967462
+    },
+    "suspicious": {
+      "n": 13,
+      "share_unsafe": 0.46153846153846156
+    },
+    "phishing": {
+      "n": 2182,
+      "share_unsafe": 0.9853345554537122
+    }
+  },
+  "results": [
+    {
+      "config": "Rule-only baseline",
+      "threshold": 0.25,
+      "accuracy": 0.5284444444444445,
+      "precision": 0.5752212389380531,
+      "recall": 0.08973768982972849,
+      "f1": 0.1552547770700637,
+      "macro_f1": 0.4140947128260306,
+      "fpr": 0.0618822518263859,
+      "fnr": 0.9102623101702715,
+      "auc": 0.5141018488616099,
+      "tn": 2183,
+      "fp": 144,
+      "fn": 1978,
+      "tp": 195
+    },
+    {
+      "config": "NLP only: TF-IDF + Logistic Regression",
+      "threshold": 0.4352,
+      "accuracy": 0.9875555555555555,
+      "precision": 0.9822323462414578,
+      "recall": 0.9921767142199723,
+      "f1": 0.9871794871794872,
+      "macro_f1": 0.9875448385811081,
+      "fpr": 0.01675977653631285,
+      "fnr": 0.007823285780027611,
+      "auc": 0.998875522562622,
+      "tn": 2288,
+      "fp": 39,
+      "fn": 17,
+      "tp": 2156
+    },
+    {
+      "config": "NLP only: TF-IDF + Decision Tree",
+      "threshold": 0.4499,
+      "accuracy": 0.9444444444444444,
+      "precision": 0.9302013422818792,
+      "recall": 0.9567418315692591,
+      "f1": 0.9432849364791288,
+      "macro_f1": 0.9444212138841637,
+      "fpr": 0.0670391061452514,
+      "fnr": 0.04325816843074091,
+      "auc": 0.9512038889595341,
+      "tn": 2171,
+      "fp": 156,
+      "fn": 94,
+      "tp": 2079
+    },
+    {
+      "config": "NLP only: TF-IDF + Random Forest",
+      "threshold": 0.3387,
+      "accuracy": 0.9797777777777777,
+      "precision": 0.970614828209765,
+      "recall": 0.9880349746893695,
+      "f1": 0.9792474344355758,
+      "macro_f1": 0.9797645622882105,
+      "fpr": 0.027932960893854747,
+      "fnr": 0.011965025310630465,
+      "auc": 0.997297476887005,
+      "tn": 2262,
+      "fp": 65,
+      "fn": 26,
+      "tp": 2147
+    },
+    {
+      "config": "ML combined: TF-IDF + rule features (LR)",
+      "threshold": 0.5206,
+      "accuracy": 0.9875555555555555,
+      "precision": 0.9822323462414578,
+      "recall": 0.9921767142199723,
+      "f1": 0.9871794871794872,
+      "macro_f1": 0.9875448385811081,
+      "fpr": 0.01675977653631285,
+      "fnr": 0.007823285780027611,
+      "auc": 0.9988776979498556,
+      "tn": 2288,
+      "fp": 39,
+      "fn": 17,
+      "tp": 2156
+    },
+    {
+      "config": "Hybrid (deployed): alpha=0.90 model + rules",
+      "threshold": 0.3978,
+      "accuracy": 0.9875555555555555,
+      "precision": 0.9822323462414578,
+      "recall": 0.9921767142199723,
+      "f1": 0.9871794871794872,
+      "macro_f1": 0.9875448385811081,
+      "fpr": 0.01675977653631285,
+      "fnr": 0.007823285780027611,
+      "auc": 0.9981319356536278,
+      "tn": 2288,
+      "fp": 39,
+      "fn": 17,
+      "tp": 2156,
+      "deployed": true
+    }
+  ],
+  "latency_ms": {
+    "median": 0.66,
+    "p95": 1.61
+  },
+  "top_unsafe_terms": [
+    "your",
+    "http",
+    "software",
+    "here",
+    "no",
+    "remove",
+    "money",
+    "our",
+    "you",
+    "online",
+    "hello",
+    "more",
+    "man",
+    "life",
+    "viagra"
+  ],
+  "top_safe_terms": [
+    "enron",
+    "vince",
+    "thanks",
+    "louise",
+    "attached",
+    "the",
+    "gas",
+    "enron com",
+    "energy",
+    "doc",
+    "houston",
+    "will",
+    "pm",
+    "deal",
+    "for"
+  ],
+  "demo_samples": [
+    {
+      "file": "03_courier_fee.eml",
+      "subject": "Pay Rs 49 to release your parcel",
+      "expected": "phishing",
+      "severity": "phishing",
+      "risk": 99,
+      "p": 0.991,
+      "r": 0.95
+    },
+    {
+      "file": "03_followers_offer.eml",
+      "subject": "Buy 10,000 Instagram followers for Rs 299",
+      "expected": "spam",
+      "severity": "phishing",
+      "risk": 94,
+      "p": 0.997,
+      "r": 0.438
+    },
+    {
+      "file": "02_hr_leave_policy.eml",
+      "subject": "Updated leave policy for 2027",
+      "expected": "legit",
+      "severity": "safe",
+      "risk": 0,
+      "p": 0.0,
+      "r": 0.0
+    },
+    {
+      "file": "04_lottery_claim.eml",
+      "subject": "CONGRATULATIONS - you have won USD 2,500,000",
+      "expected": "phishing",
+      "severity": "phishing",
+      "risk": 94,
+      "p": 0.996,
+      "r": 0.438
+    },
+    {
+      "file": "01_meeting_notes.eml",
+      "subject": "Meeting notes from Tuesday",
+      "expected": "legit",
+      "severity": "safe",
+      "risk": 0,
+      "p": 0.0,
+      "r": 0.0
+    },
+    {
+      "file": "03_order_confirmation.eml",
+      "subject": "Your order #402-1234567-8901234 has been placed",
+      "expected": "legit",
+      "severity": "safe",
+      "risk": 24,
+      "p": 0.265,
+      "r": 0.0
+    },
+    {
+      "file": "01_paypal_suspended.eml",
+      "subject": "Urgent: your account is suspended",
+      "expected": "phishing",
+      "severity": "phishing",
+      "risk": 100,
+      "p": 0.999,
+      "r": 0.995
+    },
+    {
+      "file": "02_sbi_kyc.eml",
+      "subject": "Complete KYC today or lose access to your account",
+      "expected": "phishing",
+      "severity": "phishing",
+      "risk": 98,
+      "p": 0.993,
+      "r": 0.894
+    },
+    {
+      "file": "02_seo_services.eml",
+      "subject": "Get your website on page 1 of Google in 7 days",
+      "expected": "spam",
+      "severity": "phishing",
+      "risk": 90,
+      "p": 1.0,
+      "r": 0.0
+    },
+    {
+      "file": "01_weekend_sale.eml",
+      "subject": "WEEKEND MEGA SALE!!! Up to 60% off everything",
+      "expected": "spam",
+      "severity": "phishing",
+      "risk": 90,
+      "p": 1.0,
+      "r": 0.05
+    }
+  ]
+}

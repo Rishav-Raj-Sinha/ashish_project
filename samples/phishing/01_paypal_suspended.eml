@@ -1,0 +1,34 @@
+From: "PayPal Support" <support@paypa1.com>
+Reply-To: help@mail-secure.xyz
+To: rishav@example.com
+Subject: Urgent: your account is suspended
+Date: Thu, 12 Nov 2026 10:42:00 +0530
+Message-ID: <sus-5521@paypa1.com>
+Authentication-Results: mx.example.com; spf=fail; dkim=none; dmarc=fail
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="b-pp"
+
+--b-pp
+Content-Type: text/plain; charset="utf-8"
+
+Dear customer,
+
+We noticed unusual activity on your account. Verify your password within
+24 hours or your account will be closed permanently.
+
+Verify now: https://www.paypal.com/verify
+
+PayPal Security Team
+
+--b-pp
+Content-Type: text/html; charset="utf-8"
+
+<html><body>
+<p>Dear customer,</p>
+<p>We noticed unusual activity on your account. Verify your password within
+<b>24 hours</b> or your account will be closed permanently.</p>
+<p><a href="http://paypa1-verify.mail-secure.xyz/login">https://www.paypal.com/verify</a></p>
+<p>PayPal Security Team</p>
+</body></html>
+
+--b-pp--
